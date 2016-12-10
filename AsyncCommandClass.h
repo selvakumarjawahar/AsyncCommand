@@ -19,24 +19,23 @@ public:
 		it wants to send to the receiver thread.
 	*/
 	explicit AsyncCommandClass(CommandType&& cmd) :
-		ComputeResult_{ [this](decltype(this->DummyResponse)&& response) {return response;} }, Command{ cmd } {
-	}
+		ComputeResult_{ [](ResponseType&& response) {return response;} }, Command{ cmd } {
+		}
 
 	/*!
-		command sender thread should call this before sending
+		command sender thread should call this before sending the command
 	*/
 	std::future<ResponseType> getFuture() { 
 		return ComputeResult_.get_future();
 	}
 
 	/*!
-		command receiver thread should call this to return the result of command execution		
+		command receiver thread should call this to return the result of command execution back to command sender		
 	*/
-	void operator()(ResponseType&& Response) { 
+	void sendResponse(ResponseType&& Response) { 
 		ComputeResult_(std::move(Response));
 	}
 	CommandType Command; //! this represents actual command
-	ResponseType DummyResponse; //!this is just dummy no use
 private:
 	std::packaged_task<ResponseType(ResponseType&&)> ComputeResult_;
 };
