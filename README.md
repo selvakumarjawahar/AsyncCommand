@@ -14,7 +14,7 @@ then this main.cpp can be easily compiled and tested. This main.cpp file is also
 of this class.
 
 checkout this blog for more details
-https://wordpress.com/read/feeds/44165456/posts/1255655084
+http://www.cybersorcerors.com/blog/async-command-class-in-c
 
 For further queries contact me at selvakumarjawahar@gmail.com
 
